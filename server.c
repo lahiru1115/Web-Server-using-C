@@ -14,7 +14,6 @@
 #include <sys/stat.h>
 #define DFLT_MIME_TYPE "application/octet-stream"
 #define ROOT "./src"
-
 struct fl_data
 {
     int size;
