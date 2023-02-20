@@ -106,12 +106,10 @@ void send_res(int fd, char *header, char *content_type, void *body, int content_
     send(fd, response, content_len + r, 0);
 }
 
-// Edit
-
-void post_request(int fd, char *body)
+void post_req(int fd, char *body)
 {
 
-    char response_body[1024];
+    char res_body[1024];
     char *status;
 
     int fp = open("post.text", O_CREAT | O_WRONLY, 0644);
@@ -132,7 +130,7 @@ void post_request(int fd, char *body)
         status = "error";
     }
 
-    send_res(fd, "HTTP/1.1 201 Created", "application/json", response_body, sizeof(response_body));
+    send_res(fd, "HTTP/1.1 201 Created", "application/json", res_body, sizeof(res_body));
 }
 
 char *strlower(char *s)
@@ -141,7 +139,6 @@ char *strlower(char *s)
     {
         *p = tolower(*p);
     }
-
     return s;
 }
 
@@ -211,21 +208,22 @@ char *find_end_of_header(char *header)
     {
         nl = strstr(header, "\r\n\r\n");
     }
+
     return nl;
 }
 
-void load_file(int fd, char *request_path)
+void load_file(int fd, char *req_path)
 {
-    char filepath[4096];
+    char flpath[4096];
     struct fl_data *fldata;
     char *mime_type;
 
-    snprintf(filepath, sizeof(filepath), "%s%s", ROOT, request_path);
-    fldata = fl_load(filepath);
-    mime_type = file_type_get(filepath);
+    snprintf(flpath, sizeof(flpath), "%s%s", ROOT, req_path);
+    fldata = fl_load(flpath);
+    mime_type = file_type_get(flpath);
     if (fldata == NULL)
     {
-        fldata = fl_load("./root/404.html");
+        fldata = fl_load("./src/404.html");
         send_res(fd, "HTTP/1.1 200 OK", mime_type, fldata->data, fldata->size);
     }
     else
@@ -236,24 +234,24 @@ void load_file(int fd, char *request_path)
     fl_free(fldata);
 }
 
-void handle_http_request(int d)
+void handle_http_req(int d)
 {
-    const int request_buffer_size = 65536;
-    char request[request_buffer_size];
+    const int req_buffer_size = 65536;
+    char req[req_buffer_size];
     char *p;
 
-    int bytes_recvd = recv(d, request, request_buffer_size - 1, 0);
+    int bytes_recvd = recv(d, req, req_buffer_size - 1, 0);
 
     if (bytes_recvd < 0)
     {
         perror("recv");
         return;
     }
-    request[bytes_recvd] = '\0';
+    req[bytes_recvd] = '\0';
 
     char method[10], path[100], protocol[20];
-    sscanf(request, "%s %s %s", method, path, protocol);
-    p = find_end_of_header(request);
+    sscanf(req, "%s %s %s", method, path, protocol);
+    p = find_end_of_header(req);
 
     if (strcmp(method, "GET") == 0)
     {
@@ -261,7 +259,7 @@ void handle_http_request(int d)
     }
     else
     {
-        post_request(d, p);
+        post_req(d, p);
     }
 }
 
@@ -275,7 +273,7 @@ int main()
 
     if ((client_socket = socket(AF_INET, SOCK_STREAM, 0)) > 0)
     {
-        printf("The socket was created\n");
+        printf("The socket was created.\n");
     }
 
     address.sin_family = AF_INET;
@@ -284,7 +282,7 @@ int main()
 
     if (bind(client_socket, (struct sockaddr *)&address, sizeof(address)) == 0)
     {
-        printf("Binding Socket\n");
+        printf("Binding Socket...\n");
     }
     if (listen(client_socket, 50) < 0)
     {
@@ -300,10 +298,10 @@ int main()
 
         if (server_socket > 0)
         {
-            printf("The Client is connected...\n");
+            printf("The Client is connected.\n");
         }
 
-        handle_http_request(server_socket);
+        handle_http_req(server_socket);
         close(server_socket);
     }
     return 0;
