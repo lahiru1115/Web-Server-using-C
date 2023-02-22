@@ -11,5 +11,5 @@
 1. Open a terminal or command prompt and navigate to the directory where you saved/cloned the project.
 2. Compile the code by running `gcc -o server server.c` command using a C compiler.
 3. Run the executable file by running `./server` command in the terminal.
-4. Open a web browser and go to `http://localhost:8080/`.
+4. Open a web browser and go to `http://localhost:8080/index.html`.
 5. To stop the server, you can press `Ctrl+C` in the terminal.
