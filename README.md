@@ -17,14 +17,14 @@ To run the server, please follow these steps:
 1. Open a terminal or command prompt and navigate to the directory where you saved/cloned the project.
 
 2. Compile the code by running the following command using a C compiler:
-```
-gcc -o server server.c
-```
+  ```
+  gcc -o server server.c
+  ```
 
 3. Run the executable file by executing the following command in the terminal:
-```
-./server
-```
+  ```
+  ./server
+  ```
 
 4. Open a web browser and go to [http://localhost:8080/index.html](http://localhost:8080/index.html) to access the server.
 
