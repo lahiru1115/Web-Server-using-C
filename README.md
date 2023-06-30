@@ -17,11 +17,13 @@ To run the server, please follow these steps:
 1. Open a terminal or command prompt and navigate to the directory where you saved/cloned the project.
 
 2. Compile the code by running the following command using a C compiler:
+  
   ```
   gcc -o server server.c
   ```
 
 3. Run the executable file by executing the following command in the terminal:
+  
   ```
   ./server
   ```
