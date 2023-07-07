@@ -30,7 +30,7 @@ To run the server, please follow these steps:
 
 4. Open a web browser and go to [http://localhost:8080/index.html](http://localhost:8080/index.html) to access the server.
 
-5. To stop the server, you can press Ctrl+C in the terminal.
+5. To stop the server, you can press `Ctrl+C` in the terminal.
 
 ## Repository
 
