@@ -32,6 +32,6 @@ To run the server, please follow these steps:
 
 5. To stop the server, you can press `Ctrl+C` in the terminal.
 
-## Repository
+## Contributing
 
 Feel free to explore and modify the code according to your needs. If you encounter any issues or have suggestions, please create an issue on the repository.
